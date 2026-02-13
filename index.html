@@ -1,29 +1,13 @@
-<!DOCTYPE html>
+
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-  </style>
-</head>
-
-<body>
-  <a-scene 
-    mindar-image="imageTargetSrc: ./targets.mind; autoStart: true;"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false"
-    embedded
-  >
-
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
     <a-assets>
       <img id="overlayImg" src="./overlay.png" />
     </a-assets>
@@ -37,7 +21,6 @@
         rotation="0 0 0">
       </a-plane>
     </a-entity>
-
-  </a-scene>
-</body>
+    </a-scene>
+  </body>
 </html>
