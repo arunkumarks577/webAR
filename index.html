@@ -1,32 +1,62 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
-  <body>
-    <a-scene mindar-image="imageTargetSrc: targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-  <a-assets>
-    <video 
-      id="arVideo"
-      src="overlay.mp4"
-      loop
-      muted
-      playsinline
-      crossorigin="anonymous">
-    </video>
-  </a-assets>
 
-	  <a-entity mindar-image-target="targetIndex: 0">
-    <a-plane
-      src="#arVideo"
-      position="0 0 0.01"
-      height="1"
-      width="1"
-      rotation="0 0 0">
-    </a-plane>
-  </a-entity>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const sceneEl = document.querySelector('a-scene');
+        const arVideo = document.querySelector('#arVideo');
+        const mainTarget = document.querySelector('#target-item');
+
+        // Logic to force play when the image is scanned
+        mainTarget.addEventListener("targetFound", event => {
+          console.log("Target found: Playing Video");
+          arVideo.play();
+        });
+
+        // Optional: Pause when the user moves the camera away to save CPU
+        mainTarget.addEventListener("targetLost", event => {
+          console.log("Target lost: Pausing Video");
+          arVideo.pause();
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <a-scene 
+      mindar-image="imageTargetSrc: targets.mind;" 
+      vr-mode-ui="enabled: false" 
+      device-orientation-permission-ui="enabled: false">
+      
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-assets>
+        <video 
+          id="arVideo" 
+          src="overlay.mp4" 
+          preload="auto"
+          loop="true" 
+          muted="true" 
+          playsinline 
+          webkit-playsinline 
+          crossorigin="anonymous">
+        </video>
+      </a-assets>
+
+      <a-entity id="target-item" mindar-image-target="targetIndex: 0">
+        <a-plane
+          src="#arVideo"
+          position="0 0 0"
+          height="1"
+          width="1"
+          rotation="0 0 0">
+        </a-plane>
+      </a-entity>
+      
     </a-scene>
   </body>
 </html>
